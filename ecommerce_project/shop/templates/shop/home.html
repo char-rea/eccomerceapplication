@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Shopping App</h1>
+
+{% if user.is_authenticated %}
+    <h2>Welcome, {{ user.username }}!</h2>
+
+    {% if user.profile and user.profile.role == 'vendor' %}
+        <p class="muted">
+         Use the Vendor Dashboard button above to manage your store and products.
+        </p>
+    {% else %}
+        <p>Role: Buyer</p>
+        <a href="{% url 'shop:product_list' %}">
+            Browse Products
+        </a>
+    {% endif %}
+
+    <br><br>
+
+{% else %}
+    <p>Please log in or register to continue.</p>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'shop:register' %}">Register</a>
+{% endif %}
+
+{% endblock %}

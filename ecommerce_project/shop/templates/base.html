@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}eCommerce{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+
+        <!-- Brand -->
+        <a href="{% url 'shop:home' %}" class="brand">
+            <img src="{% static 'shop/images/luxury.png' %}" alt="Logo">
+        </a>
+
+        <!-- Navigation -->
+        <div class="nav-links">
+            <a href="{% url 'shop:home' %}">Home</a>
+
+            {% if user.is_authenticated %}
+                <!-- Public product browsing ONLY -->
+                <a href="{% url 'shop:product_list' %}">Products</a>
+
+                <a href="{% url 'shop:cart_detail' %}">Cart</a>
+
+                {% if user.profile.role == 'vendor' %}
+                    <!-- Vendor actions live in dashboard, not navbar -->
+                    <a href="{% url 'shop:vendor_dashboard' %}" class="btn-nav-primary">
+                        Vendor Dashboard
+                    </a>
+                {% endif %}
+
+                <span class="nav-username">
+                    Hello, {{ user.username }}
+                </span>
+
+                <form method="post" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'shop:register' %}">Register</a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

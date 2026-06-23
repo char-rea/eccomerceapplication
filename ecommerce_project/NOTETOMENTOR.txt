@@ -1,0 +1,11 @@
+Hi mentor,
+
+I met with Ruud in a mentor session to go over the Reddit API not being public access anymore
+
+It no longer allows free usage - the functionality is all ok but it gives a 403 forbidden error code.
+
+Hence why the Reddit posts do not display on the ecommerce app.
+
+Please mark my project accordingly.
+
+Thanks

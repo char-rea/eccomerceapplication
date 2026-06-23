@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Posts from Reddit{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+
+<h1>Posts from Reddit</h1>
+
+{% if posts %}
+    <ul>
+        {% for post in posts %}
+            <li>
+                <strong>{{ post.title }}</strong><br>
+                by {{ post.author }}<br>
+                <a href="{{ post.url }}" target="_blank">View Post</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No Reddit posts available.</p>
+{% endif %}
+{% endblock %}

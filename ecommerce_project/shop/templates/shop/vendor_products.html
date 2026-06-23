@@ -1,0 +1,21 @@
+{% load static %}
+{% extends "base.html" %}
+<link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+
+{% extends 'shop/base.html' %}
+{% block title %}Your Products{% endblock %}
+
+<h1>My Products</h1>
+
+<a href="{% url 'shop:create_product' %}">Add Product</a>
+
+<ul>
+<!-- {% for product in products %}
+    <li>
+        {{ product.name }} (£{{ product.price }})
+        <a href="{% url 'shop:edit_product' product.id %}">Edit</a>
+        <a href="{% url 'shop:delete_product' product.id %}">Delete</a>
+    </li>
+{% endfor %} -->
+</ul>
+{% endblock %} 

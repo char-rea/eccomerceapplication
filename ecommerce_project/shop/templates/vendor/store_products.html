@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ store.name }} – Products{% endblock %}
+
+{% block content %}
+
+<h1>{{ store.name }} – Products</h1>
+
+<a href="{% url 'shop:product_create' pk=store.pk %}">
+    + Add New Product
+</a>
+
+<h2>Product List</h2>
+
+{% if products %}
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>{{ product.name }}</strong>
+                — ${{ product.price }}
+
+                | <a href="{% url 'shop:product_edit' pk=product.pk %}">
+                    Edit
+                  </a>
+
+                | <a href="{% url 'shop:product_delete' pk=product.pk %}">
+                    Delete
+                  </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No products in this store yet.</p>
+{% endif %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<br>
+
+<a href="{% url 'shop:vendor_dashboard' %}">
+    ← Back to Dashboard
+</a>
+
+{% endblock %}

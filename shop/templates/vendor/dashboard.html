@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Vendor Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>Vendor Dashboard</h1>
+<p>Welcome, {{ request.user.username }}!</p>
+
+<a href="{% url 'shop:store_create' %}">+ Add New Store</a>
+
+<h2>Your Stores</h2>
+
+{% if stores %}
+    <ul>
+        {% for store in stores %}
+            <li>
+                <strong>{{ store.name }}</strong>
+                — <a href="{% url 'shop:store_products' store.id %}">View Products</a>
+                | <a href="{% url 'shop:store_edit' store.pk %}">Edit</a>
+                | <a href="{% url 'shop:store_delete' store.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no stores yet.</p>
+{% endif %}
+
+{% endblock %}

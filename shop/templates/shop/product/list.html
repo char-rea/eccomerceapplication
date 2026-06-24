@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+
+<h1>Product List</h1>
+
+{% if products %}
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-card">
+
+                <h3 class="product-name">
+                    <a href="{% url 'shop:product_detail' product.slug %}" class="product-link">
+                        {{ product.name }}
+                    </a>
+                </h3>
+
+                <div class="product-price">
+                    ${{ product.price }}
+                </div>
+
+                {% if product.image %}
+                    <div class="product-image">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </div>
+                {% endif %}
+
+                {% if product.description %}
+                    <p class="product-description">
+                        {{ product.description|truncatewords:16 }}
+                    </p>
+                {% endif %}
+
+                <!-- {% comment %}
+                {% if user.profile and user.profile.role == 'vendor' %}
+                    <div class="product-card-actions">
+                        <a href="{% url 'shop:product_edit' product.pk %}">Edit</a>
+                        <a href="{% url 'shop:product_delete' product.pk %}">Delete</a>
+                    </div>
+                {% endif %}
+                {% endcomment %} -->
+
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No products available.</p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% load static %}
+{% extends "base.html" %}
+<link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+
+{% extends 'shop/base.html' %}
+{% block title %}Your Stores{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Your Stores</h1>
+
+    <a class="btn" href="{% url 'create_store' %}">+ Create Store</a>
+
+    <ul class="list">
+        {% for store in stores %}
+            <li>{{ store.name }}</li>
+        {% empty %}
+            <li>No stores yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

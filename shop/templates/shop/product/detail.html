@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1>{{ product.name }}</h1>
+
+    <p class="price">Price: ${{ product.price }}</p>
+
+    {% if product.description %}
+        <p>{{ product.description }}</p>
+    {% endif %}
+
+    <!-- Add to Cart -->
+    {% if product.available %}
+    <form action="{% url 'shop:cart_add' product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+            Add to Cart
+        </button>
+    </form>
+    {% else %}
+    <button class="btn btn-secondary" disabled>
+        Out of stock
+    </button>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'shop:product_list' %}">← Back to products</a>
+    </p>
+
+    <hr>
+
+    <h2>Reviews</h2>
+
+    {% for review in product.reviews.all %}
+        <div class="review">
+            <strong>{{ review.user.username }}</strong><br>
+
+            {% if review.verified %}
+                <span class="verified">✅ Verified purchase</span>
+            {% else %}
+                <span class="unverified">⚠️ Unverified</span>
+            {% endif %}
+
+            <p>Rating: {{ review.rating }}/5</p>
+            <p>{{ review.comment }}</p>
+        </div>
+    {% empty %}
+        <p>No reviews yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <p>
+            <a href="{% url 'shop:add_review' product.id %}">Add a review</a>
+        </p>
+    {% else %}
+        <p>
+            <a href="{% url 'shop:login' %}">Login to leave a review</a>
+        </p>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Order Successful</h1>
+
+<p>Your order number is <strong>#{{ order.id }}</strong></p>
+<p>A confirmation email has been sent.</p>
+
+<a href="{% url 'shop:product_list' %}">Continue shopping</a>
+{% endblock %}

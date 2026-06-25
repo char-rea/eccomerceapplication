@@ -459,6 +459,27 @@ def api_create_store(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def api_create_product(request):
+    store_id = request.data.get('store')
+
+    # Ensure the store belongs to the authenticated user
+    try:
+        store = Store.objects.get(id=store_id, owner=request.user)
+    except Store.DoesNotExist:
+        return Response(
+            {"error": "Store not found or access denied"},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(store=store)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['PUT'])
 def api_edit_store(request, pk):
     try:
